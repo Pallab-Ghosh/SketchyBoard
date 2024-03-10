@@ -7,6 +7,7 @@ import { LayoutDashboard, Star } from "lucide-react"
 import { Poppins } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 const font = Poppins({
   subsets : ['latin'],
@@ -16,6 +17,11 @@ const font = Poppins({
 
 
 const OrganizationSidebar = () => {
+
+ const searchParams=useSearchParams();
+ const IsFavorites=searchParams.get('favorites')
+
+
   return (
     <div className=' hidden  lg:flex flex-col space-y-6 w-[206px] pl-5 pt-5  text-black '>
           <Link href='/'>
@@ -54,7 +60,7 @@ const OrganizationSidebar = () => {
          <div className=" space-y-1 w-full">
                    <Button
                     asChild
-                    variant='ghost'
+                    variant= {IsFavorites ? 'ghost' : 'secondary'}
                     size='lg'
                     className=" font-normal justify-start px-2 w-full"
                    >
@@ -65,8 +71,8 @@ const OrganizationSidebar = () => {
                    </Button>
 
                    <Button
+                    variant= {IsFavorites ?  'default' : 'ghost' }
                     asChild 
-                    variant='ghost'
                     size='lg'
                     className=" font-normal justify-start px-2 w-full"
                    >
