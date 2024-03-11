@@ -3,6 +3,7 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
 import SearchInput from "./search-input"
 import OrganizationSidebar from './org-sidebar';
+import InviteButton from "./invite-button";
 
 const Navbar = () => {
   return (
@@ -11,32 +12,33 @@ const Navbar = () => {
                  <SearchInput/>
             </div>
 
-            <div className="block lg:hidden flex-1 ">
-            <OrganizationSwitcher
-                hidePersonal
-                 appearance={
-                 {
-                  elements:{
-                  rootBox:{
-                  display:'flex',
-                  justifyContent:'center',
-                  alignItems:'center',
-                  width:'100%',
-                  maxWidth:'376px'
-                },
-                 organizationSwitcherTrigger:{
-                  padding:'6px',
-                  width:'100%',
-                  borderRadius:'8px',
-                  border:'1px solid #E5E7EB',
-                  backgroundColor:'white'
+            <div className=" lg:hidden flex-1 ">
+                        <OrganizationSwitcher
+                            hidePersonal
+                            appearance={
+                            {
+                              elements:{
+                              rootBox:{
+                              display:'flex',
+                              justifyContent:'center',
+                              alignItems:'center',
+                              width:'100%',
+                              maxWidth:'376px'
+                            },
+                            organizationSwitcherTrigger:{
+                              padding:'6px',
+                              width:'100%',
+                              borderRadius:'8px',
+                              border:'1px solid #E5E7EB',
+                              backgroundColor:'white'
 
-                 }
-            }
-            }
-        }
-         />
+                            }
+                        }
+                        }
+                    }
+                    />
             </div>
+            <InviteButton/>
 
             <div >
                <UserButton/>
