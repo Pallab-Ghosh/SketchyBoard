@@ -32,8 +32,8 @@ const Navbar = () => {
                             organizationSwitcherTrigger:{
                               padding:'6px',
                               width:'100%',
-                              borderRadius:'8px',
-                              border:'1px solid #E5E7EB',
+                              borderRadius:'50p%',
+                              border:'1px solid #5e3ac9',
                               backgroundColor:'white'
 
                             }
