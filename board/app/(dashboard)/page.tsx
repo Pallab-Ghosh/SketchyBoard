@@ -3,16 +3,30 @@
 import React from 'react'
 import EmptyOrg from './_components/empty-org'
 import { useOrganization } from '@clerk/nextjs';
+import { json } from 'stream/consumers';
+import BoardList from './_components/board-list';
 
-const Dashboardpage = () => {
+
+type DashboardPageProps={
+  searchParams:{
+    search? : string,
+    favorites? : string
+  }
+}
+
+ 
+
+
+const Dashboardpage = ({searchParams}:DashboardPageProps) => {
 
   const {organization}=useOrganization();
 
 
   return (
     <div className=' bg-slate-100 flex-1 h-[calc(100%-80px)] p-6'>
+          {JSON.stringify(searchParams)}
       {
-        !organization ?   <EmptyOrg/> : <p>Board List</p>
+        !organization ?   <EmptyOrg/> :  <BoardList orgId={organization.id} query={searchParams} />
       }
     </div>
   )
