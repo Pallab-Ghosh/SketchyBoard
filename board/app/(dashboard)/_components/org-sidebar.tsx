@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { OrganizationSwitcher } from "@clerk/nextjs"
+import { OrganizationSwitcher, useOrganization } from "@clerk/nextjs"
 import { LayoutDashboard, Star } from "lucide-react"
 import { Poppins } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { useState } from "react"
 
 const font = Poppins({
   subsets : ['latin'],
@@ -17,9 +18,10 @@ const font = Poppins({
 
 
 const OrganizationSidebar = () => {
-
+ 
  const searchParams=useSearchParams();
  const IsFavorites=searchParams.get('favorites')
+ const check= IsFavorites == 'true' ? null :true
 
 
   return (
@@ -76,12 +78,12 @@ const OrganizationSidebar = () => {
                     size='lg'
                     className=" font-normal justify-start px-2 w-full"
                    >
-                      <Link href={
-                        {
-                          pathname:'/',
-                          query:{favorites : true}
-                        }
-                      }>
+                            <Link href={
+                              {
+                                pathname:'/',
+                                query:{favorites : check}
+                              }
+                            }>
                             <Star className=" h-4 w-4 mr-2"/>
                             Favorites Boards
                       </Link>
