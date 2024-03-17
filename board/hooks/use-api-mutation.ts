@@ -7,16 +7,23 @@ export const useApiMutation =(mutationFunction : any ) => {
     const [pending , setpending] = useState(false);
     const apiMutation = useMutation(mutationFunction)
 
-     const mutate =(payload : any)=>{
-        setpending(true);
-         apiMutation(payload)
-        .finally(()=>setpending(false))
-        .then((result)=>{
-            return result
-        })
-        .catch((error)=>{
+     const mutate =async (payload : any)=>{
+
+        try{
+            setpending(true);
+            const val =await apiMutation(payload)
+            return val;
+        }
+        catch(error){
             throw error
-        })
+        }
+        finally{
+            setpending(false)
+        }
+
+        
+       
+     
      }
 
   return {mutate , pending}
