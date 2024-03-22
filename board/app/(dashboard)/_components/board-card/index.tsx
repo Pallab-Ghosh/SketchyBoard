@@ -2,7 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Overlay from './overlay'
-
+import {formatDistanceToNow} from 'date-fns'
+import { useAuth } from '@clerk/nextjs'
 
 type BoardCardProps={
     key : string 
@@ -18,7 +19,15 @@ type BoardCardProps={
 
 
 const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt , orgId , isFavorite}:BoardCardProps) => {
-  return (
+ 
+     const {userId} = useAuth();
+     const authorLabel = authorID == userId ? 'You' : authorName
+     const createdAtLabel = formatDistanceToNow (createdAt , {
+        addSuffix : true
+     } )
+
+
+    return (
        <Link href={`/board/${id}`}>
         <div className='aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden'>
                 <div className= 'relative flex-1  bg-amber-50'>
