@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Overlay from './overlay'
 
 
 type BoardCardProps={
@@ -19,17 +20,19 @@ type BoardCardProps={
 const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt , orgId , isFavorite}:BoardCardProps) => {
   return (
        <Link href={`/board/${id}`}>
-        <div className=' group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden'>
-            <div className=' relative flex-1  bg-slate-300'>
-                <Image
-                 src={imageUrl}
-                alt='doodle'
-                fill
-                className=' object-fill'
-                />
-            </div>
-
+        <div className='aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden'>
+                <div className= 'relative flex-1  bg-amber-50'>
+                       <Image
+                            src={imageUrl}
+                            alt='doodle'
+                            fill
+                            className=' object-fill'
+                        />
+                   <Overlay/>  
+                </div> 
+                
         </div>
+   
     </Link> 
 
 
