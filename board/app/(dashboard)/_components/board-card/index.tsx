@@ -4,6 +4,7 @@ import React from 'react'
 import Overlay from './overlay'
 import {formatDistanceToNow} from 'date-fns'
 import { useAuth } from '@clerk/nextjs'
+import Footer from './footer'
 
 type BoardCardProps={
     key : string 
@@ -29,7 +30,7 @@ const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt 
 
     return (
        <Link href={`/board/${id}`}>
-        <div className='aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden'>
+        <div className='group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden'>
                 <div className= 'relative flex-1  bg-amber-50'>
                        <Image
                             src={imageUrl}
@@ -39,9 +40,16 @@ const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt 
                         />
                    <Overlay/>  
                 </div> 
-                
+
+                <Footer
+                  isFavorite ={isFavorite}
+                  title = {title}
+                  authorLabel = {authorLabel}
+                  createdAtLabel = {createdAtLabel}
+                  onClick = {()=>{}}
+                  disabled = {false}
+                />
         </div>
-   
     </Link> 
 
 
