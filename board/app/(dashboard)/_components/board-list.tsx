@@ -9,6 +9,7 @@ import EmptyFavorite from './empty-favorite'
 import EmptyBoard from './empty-boards'
 import BoardCard from './board-card'
 import NewBoardButton from './new-board-button'
+import Loading from './loading'
 
 
 type BoardListProps = {
@@ -24,11 +25,11 @@ const BoardList = ({orgId , query}:BoardListProps) => {
 
 
     const data=useQuery(api.boards.get , {orgId});
-
+   //  console.log("data" , data)
     if(data == undefined)
     return (
            <div>
-             Loading...
+             <Loading/>
            </div>
         )
 
