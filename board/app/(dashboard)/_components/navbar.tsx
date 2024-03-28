@@ -4,6 +4,7 @@ import { OrganizationSwitcher, UserButton, useOrganization } from "@clerk/nextjs
 import SearchInput from "./search-input"
 import OrganizationSidebar from './org-sidebar';
 import InviteButton from "./invite-button";
+import EmptyOrg from "./empty-org";
 
 const Navbar = () => {
 
@@ -11,8 +12,8 @@ const Navbar = () => {
 
 
   return (
-    <div className="flex items-start gap-x-4 p-5">
-            <div className=" hidden lg:flex lg:flex-1">
+    <div className="flex items-start gap-x-4 p-5 ">
+            <div className=" hidden lg:flex lg:flex-1 ">
                  <SearchInput/>
             </div>
 
@@ -32,8 +33,8 @@ const Navbar = () => {
                             organizationSwitcherTrigger:{
                               padding:'6px',
                               width:'100%',
-                              borderRadius:'50p%',
-                              border:'1px solid #5e3ac9',
+                              borderRadius:'1%',
+                              border:'1px solid  #1a0269',
                               backgroundColor:'white'
 
                             }
@@ -47,7 +48,7 @@ const Navbar = () => {
                 <InviteButton/>
               )
             }
-          
+           
 
             <div >
                <UserButton/>
