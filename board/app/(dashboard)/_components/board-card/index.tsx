@@ -5,6 +5,8 @@ import Overlay from './overlay'
 import {formatDistanceToNow} from 'date-fns'
 import { useAuth } from '@clerk/nextjs'
 import Footer from './footer'
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 type BoardCardProps={
     key : string 
@@ -36,7 +38,7 @@ const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt 
                             src={imageUrl}
                             alt='doodle'
                             fill
-                            className=' object-fill'
+                            className=' object-fit'
                         />
                    <Overlay/>  
                 </div> 
@@ -57,3 +59,12 @@ const BoardCard = ({key,id , title, imageUrl, authorID , authorName , createdAt 
 }
 
 export default BoardCard
+
+BoardCard.Skeleton_property =  function BoardCardSkeleton(){
+  return (
+    <div className='group aspect-[100/127]  rounded-lg overflow-hidden flex flex-col'>
+       <Skeleton className=' h-full w-full'/>
+    </div>
+  )
+}
+
