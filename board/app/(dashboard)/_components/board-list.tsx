@@ -26,12 +26,29 @@ const BoardList = ({orgId , query}:BoardListProps) => {
 
     const data=useQuery(api.boards.get , {orgId});
    //  console.log("data" , data)
-    if(data == undefined)
+    if(data == undefined){
     return (
            <div>
-             <Loading/>
+                       
+                <h2 className=' text-2xl'>
+                    {
+                        query.favorites ? 'Favorite Boards' : 'Team Boards'
+                    }
+                </h2>
+
+                       
+                    <div className=' grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10'>   
+                        <NewBoardButton orgId={orgId} disabled />  
+                         <BoardCard.Skeleton_property/>
+                         <BoardCard.Skeleton_property/>
+                         <BoardCard.Skeleton_property/>
+                         <BoardCard.Skeleton_property/>
+                         <BoardCard.Skeleton_property/>
+        
+                </div>
            </div>
         )
+     }
 
 
     if(!data?.length && query.search)
@@ -58,7 +75,7 @@ const BoardList = ({orgId , query}:BoardListProps) => {
            }
         </h2>
         
-          <div className=' grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10 '>
+          <div className=' grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10'>
              
              <NewBoardButton orgId={orgId} />
 
