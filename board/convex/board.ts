@@ -27,6 +27,7 @@ export const create = mutation({
 
     //  console.log('identity --> ' , identity)
 
+
       if(!identity)
       {
         throw new Error("Unauthorizes")
@@ -63,6 +64,40 @@ export const remove = mutation({
       //todo : later check to delete favorite relation as well 
 
      await ctx.db.delete(args.id)
+  },
+
+
+})
+
+
+export const update = mutation({
+  args:{id : v.id("boards") , title:v.string()},
+
+  handler:async(ctx, args)=>{
+    const identity = await ctx.auth.getUserIdentity();
+    const title = args.title.trim();
+ 
+      if(!identity)
+      {
+        throw new Error("Unauthorized")
+      }
+
+     if(!title)
+     {
+       throw new Error ("Title is required")
+     }
+ 
+     if(title.length > 10)
+     {
+      throw new Error("Title cannot be longer than 60 characters")
+     }
+
+     const board = await ctx.db.patch(args.id , {
+      title : args.title
+     })
+     return board ;
+
+   
   },
 
 
