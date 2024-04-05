@@ -135,12 +135,13 @@ export const favorite = mutation ({
 
       else{
 
-          await ctx.db.insert("userFavorites" , {
+        const new_favorite_board = await ctx.db.insert("userFavorites" , {
             userId:userId,
             boardId:args.id, //board._id,
             orgId:args.orgId
           })
-          return board;   
+          console.log('new_favorite_board',new_favorite_board)
+          return new_favorite_board;   
       }
 
        
