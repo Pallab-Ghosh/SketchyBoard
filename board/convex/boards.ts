@@ -3,9 +3,7 @@ import {v} from 'convex/values'
 import {query} from './_generated/server'
 
 export const get = query({
-    args :{
-        orgId :  v.string()
-    }
+    args :{ orgId :  v.string() }
     ,
     handler : async(ctx, args)=>{
         const identity = await ctx.auth .getUserIdentity();
@@ -20,7 +18,18 @@ export const get = query({
         .order("desc")
         .collect()
 
-        return boards;
+            const boardWithFavoriteRelation = boards.map(async(board_value)=>{
+
+                return ctx.db.query("userFavorites").withIndex("by_user_board" ,(q)=>q.eq("userId",identity.subject).eq("boardId",board_value._id))
+                    .unique()
+                    .then((response) =>{
+                        //console.log("response from favorite", response)
+                        return {...board_value , isFavorite : !!response}
+                    })
+            })
+
+            const Resolved_Board_With_Favorite_Boolean = Promise.all(boardWithFavoriteRelation)
+            return Resolved_Board_With_Favorite_Boolean; 
     
     }
 })
