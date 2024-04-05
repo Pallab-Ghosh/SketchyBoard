@@ -25,7 +25,7 @@ const BoardList = ({orgId , query}:BoardListProps) => {
 
 
     const data=useQuery(api.boards.get , {orgId});
-   //  console.log("data" , data)
+
     if(data == undefined){
     return (
            <div>
@@ -90,7 +90,7 @@ const BoardList = ({orgId , query}:BoardListProps) => {
                         authorName ={board.authorName}
                         createdAt={board._creationTime}
                         orgId={board.orgId}
-                        isFavorite={false}
+                        isFavorite={board.isFavorite}
                     />
                 ))
              }
