@@ -2,6 +2,7 @@ import {v} from 'convex/values'
 
 
 import {mutation} from "./_generated/server"
+import { DevBundlerService } from 'next/dist/server/lib/dev-bundler-service';
 
 const images=[
   'placeholders/1.svg',
@@ -42,12 +43,9 @@ export const create = mutation({
         authorName : identity.name ? identity.name : "Unknown",
         imageUrl : randomImages
       })
-      //console.log('newboard',newboard)
+      
        return newboard
-
    }
-
-    
 })
 
 export const remove = mutation({
@@ -62,8 +60,18 @@ export const remove = mutation({
       }
 
       //todo : later check to delete favorite relation as well 
+      const userId = identity.subject
+      
+      const existingfavorite = await ctx.db.query("userFavorites")
+      .withIndex("by_user_board" , (q)=>q.eq("userId" , userId) .eq("boardId",args.id) ) .unique()
 
-     await ctx.db.delete(args.id)
+      if(existingfavorite)
+        {
+          await ctx.db.delete(existingfavorite._id)
+        }
+
+
+       await ctx.db.delete(args.id)
   },
 
 
@@ -133,18 +141,16 @@ export const favorite = mutation ({
         throw new Error("Board already favorited")
       }
 
-      else{
+      else
 
-        const new_favorite_board = await ctx.db.insert("userFavorites" , {
-            userId:userId,
-            boardId:args.id, //board._id,
-            orgId:args.orgId
-          })
-          console.log('new_favorite_board',new_favorite_board)
-          return new_favorite_board;   
-      }
+      {
+            await ctx.db.insert("userFavorites" , {
+                userId:userId,
+                boardId:args.id, //board._id,
+                orgId:args.orgId
+              })
 
-       
+      }//else end
   },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 })
