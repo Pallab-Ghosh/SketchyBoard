@@ -20,7 +20,7 @@ export const get = query({
 
             const boardWithFavoriteRelation = boards.map(async(board_value)=>{
 
-                return ctx.db.query("userFavorites").withIndex("by_user_board" ,(q)=>q.eq("userId",identity.subject).eq("boardId",board_value._id))
+                return ctx.db.query("userFavorites").withIndex("by_user_board_org" ,(q)=>q.eq("userId",identity.subject).eq("boardId",board_value._id).eq("orgId",args.orgId))
                     .unique()
                     .then((response) =>{
                         //console.log("response from favorite", response)
