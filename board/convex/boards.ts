@@ -3,7 +3,7 @@ import {v} from 'convex/values'
 import {query} from './_generated/server'
 
 export const get = query({
-    args :{ orgId :  v.string() }
+    args :{ orgId :  v.string() ,search : v.optional(v.string())}
     ,
     handler : async(ctx, args)=>{
         const identity = await ctx.auth .getUserIdentity();
@@ -13,17 +13,31 @@ export const get = query({
             throw new Error('Unauthorized');
         }
 
-        const boards = await ctx.db.query("boards")
-        .withIndex("by_org" , (q) =>q.eq("orgId",args.orgId))
-        .order("desc")
-        .collect()
 
-            const boardWithFavoriteRelation = boards.map(async(board_value)=>{
+        const title = args.search as string;
+        let boards =[];
 
-                return ctx.db.query("userFavorites").withIndex("by_user_board_org" ,(q)=>q.eq("userId",identity.subject).eq("boardId",board_value._id).eq("orgId",args.orgId))
-                    .unique()
+        if(title)
+            {
+                boards = await ctx.db.query("boards").withSearchIndex("search_title" , (q)=> q.search("title" , title).eq("orgId", args.orgId))
+                .collect()
+            }
+
+         else
+         {
+            boards = await ctx.db.query("boards").withIndex("by_org" , (q) =>q.eq("orgId",args.orgId)) .order("desc")
+            .collect()
+         }
+
+
+       
+ const boardWithFavoriteRelation = boards.map(async(board_value)=>{
+
+    return ctx.db.query("userFavorites").withIndex("by_user_board_org" ,(q)=>q.eq("userId",identity.subject).eq("boardId",board_value._id).eq("orgId",args.orgId))
+      .unique()
+
                     .then((response) =>{
-                        //console.log("response from favorite", response)
+                      
                         return {...board_value , isFavorite : !!response}
                     })
             })

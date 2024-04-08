@@ -24,7 +24,7 @@ type BoardListProps = {
 const BoardList = ({orgId , query}:BoardListProps) => {
 
 
-    const data=useQuery(api.boards.get , {orgId});
+    const data=useQuery(api.boards.get , {orgId , search:query.search});
 
     if(data == undefined){
     return (
