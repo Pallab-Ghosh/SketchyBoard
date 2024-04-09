@@ -1,10 +1,17 @@
 import Canvas from "./_components/canvas"
 
+type BoardpageProps = {
+   params :{
+    boardId : string
+   }
+}
 
-const Boardpage = () => {
+
+
+const Boardpage = ({params}:BoardpageProps) => {
   return (
     <div className="h-full">
-        <Canvas/>
+        <Canvas  boardId = {params.boardId} />
     </div>
   )
 }

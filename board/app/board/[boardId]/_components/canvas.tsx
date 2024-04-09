@@ -5,8 +5,14 @@ import { Participants } from "./participants"
 import { Toolbar } from "./toolbar"
 
  
+type CanvasProps = {
+  boardId : string
+}
 
-const Canvas = () => {
+
+const Canvas = ({boardId}:CanvasProps) => {
+
+
   return (
     <main className="h-full w-full  bg-neutral-100 relative touch-none">
         <Info/>
