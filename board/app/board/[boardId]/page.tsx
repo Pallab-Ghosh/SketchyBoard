@@ -3,7 +3,7 @@ import Canvas from "./_components/canvas"
 
 const Boardpage = () => {
   return (
-    <div>
+    <div className="h-full">
         <Canvas/>
     </div>
   )
