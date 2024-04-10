@@ -12,7 +12,7 @@ type BoardpageProps = {
 
 const Boardpage = ({params}:BoardpageProps) => {
 
-  return <CanvasLoading/>
+  
 
   return (
 
