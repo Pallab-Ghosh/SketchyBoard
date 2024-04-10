@@ -1,3 +1,5 @@
+import { Skeleton } from "@/components/ui/skeleton"
+
  
 
 export const Toolbar = () => {
@@ -18,4 +20,10 @@ export const Toolbar = () => {
   )
 }
 
+ export const ToolbarSkeleton = ()=>{
+    return(
+      <Skeleton className="absolute top-[50%] -translate-y-[50%] left-2 flex flex-col gap-y-4 h-[360px] w-[52px] bg-neutral-400"/>
+     
  
+    )
+ }
