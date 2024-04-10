@@ -1,3 +1,4 @@
+import { Room } from "@/components/room"
 import Canvas from "./_components/canvas"
 
 type BoardpageProps = {
@@ -9,9 +10,14 @@ type BoardpageProps = {
 
 
 const Boardpage = ({params}:BoardpageProps) => {
+
   return (
+
     <div className="h-full">
-        <Canvas  boardId = {params.boardId} />
+         <Room roomId={params.boardId}>
+            <Canvas  boardId ={params.boardId} />
+         </Room>
+ 
     </div>
   )
 }
