@@ -1,5 +1,6 @@
 import { Room } from "@/components/room"
 import Canvas from "./_components/canvas"
+import {CanvasLoading} from "./_components/canvas-loading"
 
 type BoardpageProps = {
    params :{
@@ -11,11 +12,13 @@ type BoardpageProps = {
 
 const Boardpage = ({params}:BoardpageProps) => {
 
+  return <CanvasLoading/>
+
   return (
 
     <div className="h-full">
-         <Room roomId={params.boardId}>
-            <Canvas  boardId ={params.boardId} />
+         <Room roomId={params.boardId} fallback ={<CanvasLoading/>}>
+            <Canvas  boardId ={params.boardId}   />
          </Room>
  
     </div>
