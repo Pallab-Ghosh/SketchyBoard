@@ -1,7 +1,7 @@
 import {v} from 'convex/values'
 
 
-import {mutation} from "./_generated/server"
+import {mutation, query} from "./_generated/server"
 import { DevBundlerService } from 'next/dist/server/lib/dev-bundler-service';
 
 const images=[
@@ -192,4 +192,14 @@ export const Unfavorite = mutation ({
     
   },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+})
+
+
+
+export const get = query({
+    args : {id: v.id("boards")},
+    handler : async(ctx, args)  => {
+      const board = ctx.db.get(args.id)
+      return board;
+    },
 })
