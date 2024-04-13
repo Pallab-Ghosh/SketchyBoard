@@ -1,9 +1,10 @@
- 'use client'
+ 
 
 import { Info } from "./info"
 import { Participants } from "./participants"
 import { Toolbar } from "./toolbar"
 
+import { useSelf } from "@/liveblocks.config"
  
 type CanvasProps = {
   boardId : string
@@ -11,14 +12,15 @@ type CanvasProps = {
 
 
 const Canvas = ({boardId}:CanvasProps) => {
-
+ 
+ 
 
   return (
-    <main className="h-full w-full  bg-neutral-100 relative touch-none">
-        <Info/>
+    <main className="h-full w-full  bg-slate-200 relative touch-none">
+        <Info boardId={boardId}  />
         <Participants/>
         <Toolbar/>
-        </main>
+    </main>
   )
 }
 
