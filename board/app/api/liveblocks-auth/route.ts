@@ -38,23 +38,21 @@ export async function POST(request : Request){
 
         if(board?.orgId !== authorization.orgId)
             {
-                return new Response ("Unauthorized");
+                return new Response ("Unauthorized" ,{ status : 403});
             }
 
         const userInfo = {
-            name : user.firstName || "Teammate",
+            name : user.firstName || "Anonymous",
             picture:  user.imageUrl
         }
 
         console.log("user info ",userInfo)
 
         const session = liveblocks.prepareSession(  user.id, {userInfo} )
-
-
-     if(room)
-        {
-            session.allow(room , session.FULL_ACCESS);
-        }
+        if(room)
+            {
+                session.allow(room , session.FULL_ACCESS);
+            }
         const { status, body } = await session.authorize();
         console.log("ALLOWED" , {status , body})
         return new Response(body, { status });
