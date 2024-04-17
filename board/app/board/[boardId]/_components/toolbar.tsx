@@ -3,12 +3,22 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ToolButton } from "./tool-button"
 import { Circle, MousePointer2, Pencil, Redo2, Square, StickyNote, Type, Undo2 } from "lucide-react"
 
- 
 
-export const Toolbar = () => {
+type CanvasState = any;
 
- 
-  
+type ToolbarProps = {
+    canvasState : CanvasState ,
+    setCanvasState : (newState: CanvasState)=>void,
+    undo : ()=>void,
+    redo : ()=>void,
+    canUndo: boolean,
+    canRedo: boolean
+}
+
+
+
+
+export const Toolbar = ({canvasState,setCanvasState,undo,redo,canUndo,canRedo}:ToolbarProps) => {
 
   return (
        <div className="absolute top-[50%] -translate-y-[50%] left-2 flex flex-col gap-y-4">
