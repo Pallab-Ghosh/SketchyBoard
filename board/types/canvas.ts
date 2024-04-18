@@ -95,13 +95,11 @@ export enum Side {
 export type CanvasState = 
     {
      mode : CanvasMode.None 
-
     }
 
   | {
     mode : CanvasMode.Inserting,
     layertype : LayerType.Text | LayerType.Ellipse | LayerType.Rectangle | LayerType.Note
-
     }
 
   | {
