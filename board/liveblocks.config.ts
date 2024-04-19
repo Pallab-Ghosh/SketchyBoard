@@ -8,7 +8,7 @@ authEndpoint : "/api/liveblocks-auth",
  
 
 type Presence = {
-  // cursor: { x: number, y: number } | null,
+   cursor: { x: number, y: number } | null,
   // ...
 };
 
