@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import { Info } from "./info"
 import { Participants } from "./participants"
 import { Toolbar } from "./toolbar"
@@ -19,21 +19,27 @@ type CanvasProps = {
 
 const Canvas = ({boardId}:CanvasProps) => {
  
- const [canvasState , setCanvasState]= useState<CanvasState>({mode:CanvasMode.None})
- const [camera , setCamera] = useState<Camera>({x:0 , y:0})
-
+  const [canvasState , setCanvasState]= useState<CanvasState>({mode:CanvasMode.None})
+  const [camera , setCamera] = useState<Camera>({x:0 , y:0})
 
 
   const history = useHistory();
   const canUndo = useCanUndo();//boolean value whether it is active or not
   const canRedo = useCanRedo();//boolean value whether it is active or not
  
- 
-  const onPointerMove = useMutation(({setMyPresence} , e:React.PointerEvent)=>{
-     
-    e.preventDefault();
+ const onWheel = useCallback((e:React.WheelEvent)=>{
+   setCamera((prev_camera_value)=>({
+     x:prev_camera_value.x - e.deltaX,
+     y:prev_camera_value.y - e.deltaY
+   }))
+ },[])
 
-    const current = {  x:0 ,  y:0  }
+  const onPointerMove = useMutation(( {setMyPresence} , e:React.PointerEvent ) =>{
+    e.preventDefault();
+    const current = {
+        x:0 ,
+        y:0 
+       }
 
     setMyPresence({cursor:current})
   },[])
