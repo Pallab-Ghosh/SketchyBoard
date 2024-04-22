@@ -8,6 +8,7 @@ import { Toolbar } from "./toolbar"
 import { useCanRedo, useCanUndo, useHistory, useSelf , useMutation} from "@/liveblocks.config"
 import { Camera, CanvasMode, CanvasState } from "@/types/canvas"
 import { CursorPresence } from "./cursor-presence"
+import { pointerEventToCanvasPoint } from "@/lib/utils"
 
 
  
@@ -28,18 +29,26 @@ const Canvas = ({boardId}:CanvasProps) => {
   const canRedo = useCanRedo();//boolean value whether it is active or not
  
  const onWheel = useCallback((e:React.WheelEvent)=>{
+
+   console.log('onwheel',{
+     x:e.deltaX,
+     y:e.deltaY
+
+   })
    setCamera((prev_camera_value)=>({
      x:prev_camera_value.x - e.deltaX,
      y:prev_camera_value.y - e.deltaY
-   }))
+   })
+   )
+
  },[])
 
   const onPointerMove = useMutation(( {setMyPresence} , e:React.PointerEvent ) =>{
     e.preventDefault();
-    const current = {
-        x:0 ,
-        y:0 
-       }
+
+    const current = pointerEventToCanvasPoint(e, camera);
+    console.log('current', current)
+      
 
     setMyPresence({cursor:current})
   },[])
@@ -60,7 +69,10 @@ const Canvas = ({boardId}:CanvasProps) => {
          canUndo={canUndo}
          />
          
-         <svg className="h-[100vh] w-[100vw]">
+         <svg className="h-[100vh] w-[100vw]"
+          onWheel={onWheel}
+          onPointerMove={onPointerMove}
+         >
             <g>
                 <CursorPresence/>
             </g>
