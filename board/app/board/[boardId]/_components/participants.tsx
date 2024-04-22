@@ -3,6 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { useOthers, useSelf } from "@/liveblocks.config"
 import { UserAvatar } from "./user-avatar";
+import { ConnectionIdToColor } from "@/lib/utils";
  
  
 
@@ -14,9 +15,7 @@ export const Participants = () => {
   const CurrentUser = useSelf()
   const hasMoreUsers = users.length > maximum_shown_users
 
- 
- 
- console.log('users',users)
+
 
   return (
 
@@ -27,6 +26,7 @@ export const Participants = () => {
           {
                 CurrentUser && (
                     <UserAvatar
+                      borderColor={ConnectionIdToColor(CurrentUser.connectionId)}
                       key={CurrentUser.connectionId}
                       src={CurrentUser?.info.picture}
                       name={CurrentUser?.info.name}
@@ -40,6 +40,7 @@ export const Participants = () => {
                 users.slice(0,maximum_shown_users).map((user_val)=>{
                   return (
                     <UserAvatar
+                      borderColor={ConnectionIdToColor(user_val.connectionId)}
                       key={user_val.connectionId}
                       src={user_val?.info.picture}
                       name={user_val?.info.name}
