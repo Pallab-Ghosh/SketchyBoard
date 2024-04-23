@@ -14,6 +14,11 @@ const COLORS =[
   "#059669",
   "#7C3AED",
   "#DB2777",
+  '#4469c7',
+  '#a2ad2a',
+  '#f2bf30','#a16c37','#de602a','#851c4d'
+
+
 ]
 
 export function cn(...inputs: ClassValue[]) {
