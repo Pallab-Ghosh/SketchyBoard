@@ -4,6 +4,7 @@ import { createRoomContext, createLiveblocksContext } from "@liveblocks/react";
 const client = createClient({
    
 authEndpoint : "/api/liveblocks-auth",
+throttle:28
 })
  
 
