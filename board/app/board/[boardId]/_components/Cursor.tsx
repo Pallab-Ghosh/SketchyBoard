@@ -9,31 +9,22 @@ import { memo, useEffect } from "react"
     connectionId : number
  }
 
- export const Cursor = memo(({connectionId}:CursorProps)=>{
-
-    //console.log('Cursor called')
- 
+ export const Cursor = memo(({connectionId}:CursorProps)=>
+   {
 
     const info = useOther(connectionId , (user)=> user?.info)
     const cursor = useOther(connectionId , (user) => user.presence.cursor )
-    
     const name = info?.name || "Teammate"
    
 
-    if(!cursor)
-        {
-            return null;
-        }
-   
-
-    const {x, y} = cursor
+    if(!cursor)return null;
+    const {x, y} = cursor;
  
-  
     return(
           <foreignObject
             style={{transform: `translateX(${x}px) translateY(${y}px)` }}
             height ={50}
-            width ={50}
+            width ={name.length * 10 + 24}
             className=" relative drop-shadow-md"
           >
              <MousePointer2 
@@ -42,8 +33,12 @@ import { memo, useEffect } from "react"
                fill: ConnectionIdToColor(connectionId) ,
                color: ConnectionIdToColor(connectionId)
             }}
-
              />
+             
+             <div className=" absolute left-5 px-1.5 py-0.5 rounded-md text-xs text-white font-semibold" 
+              style={{backgroundColor: ConnectionIdToColor(connectionId)}} >
+               {name}
+             </div>
           </foreignObject>
     )
  })
