@@ -29,32 +29,27 @@ const Canvas = ({boardId}:CanvasProps) => {
   const canRedo = useCanRedo();//boolean value whether it is active or not
  
  const onWheel = useCallback((e:React.WheelEvent)=>{
-
-   console.log('onwheel',{
-     x:e.deltaX,
-     y:e.deltaY
-
-   })
    setCamera((prev_camera_value)=>({
      x:prev_camera_value.x - e.deltaX,
      y:prev_camera_value.y - e.deltaY
    })
    )
-
  },[])
 
+
   const onPointerMove = useMutation(( {setMyPresence} , e:React.PointerEvent ) =>{
+
     e.preventDefault();
-
     const current = pointerEventToCanvasPoint(e, camera);
-    console.log('current', current)
-      
-
     setMyPresence({cursor:current})
   },[])
 
 
- 
+  const onPointerLeave = useMutation(({setMyPresence} )=>{
+   setMyPresence({cursor : null})
+  },[])
+
+
   return (
     <main className="h-full w-full  bg-slate-200 relative touch-none">
       
@@ -72,6 +67,7 @@ const Canvas = ({boardId}:CanvasProps) => {
          <svg className="h-[100vh] w-[100vw]"
           onWheel={onWheel}
           onPointerMove={onPointerMove}
+          onPointerLeave={onPointerLeave}
          >
             <g>
                 <CursorPresence/>
