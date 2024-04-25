@@ -1,20 +1,28 @@
-import React from 'react'
+import { useStorage } from '@/liveblocks.config'
+import { memo } from 'react'
 
 
 type LayerPreviewProps ={
-
     id  :string,
     onLayerPointerDown :(e: React.PointerEvent , layerId:string)=>void,
     selectionColor :string,
 }
-const LayerPreview = ({id , onLayerPointerDown, selectionColor}:LayerPreviewProps) => {
+
+
+
+export const LayerPreview = memo(({id , onLayerPointerDown, selectionColor}:LayerPreviewProps) => {
  
- 
-    return (
+   const layer = useStorage((root)=>root.layers.get(id))
+     
+   if(!layer)return;
+
+   
+   
+   return (
     <div>
         
     </div>
   )
-}
+})
 
-export default LayerPreview
+LayerPreview.displayName = "LayerPreview"
