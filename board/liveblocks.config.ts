@@ -14,6 +14,7 @@ throttle:28
 
 type Presence = {
    cursor: { x: number, y: number } | null,
+   selection : string[];
   // ...
 };
 
