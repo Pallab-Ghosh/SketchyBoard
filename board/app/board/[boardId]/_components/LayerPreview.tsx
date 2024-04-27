@@ -1,4 +1,7 @@
+'use client'
+
 import { useStorage } from '@/liveblocks.config'
+import { LayerType } from '@/types/canvas'
 import { memo } from 'react'
 
 
@@ -16,13 +19,19 @@ export const LayerPreview = memo(({id , onLayerPointerDown, selectionColor}:Laye
      
    if(!layer)return;
 
-   
-   
-   return (
-    <div>
-        
-    </div>
-  )
-})
+   switch(layer.type)
+   {
+         case LayerType.Rectangle:
+           return(
+             <div>
+              rectangle
+             </div>
+           )
+          default:
+            console.warn("unknown layer type");
+            return null;
+   }
+}
+)
 
 LayerPreview.displayName = "LayerPreview"
