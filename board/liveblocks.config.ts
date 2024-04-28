@@ -8,7 +8,7 @@ import {Layer , Color} from '@/types/canvas'
 const client = createClient({
    
 authEndpoint : "/api/liveblocks-auth",
-throttle:28
+throttle:16
 })
  
 
