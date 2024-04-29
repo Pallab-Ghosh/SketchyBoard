@@ -1,14 +1,14 @@
 'use client'
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import { Info } from "./info"
 import { Participants } from "./participants"
 import { Toolbar } from "./toolbar"
 
-import { useCanRedo, useCanUndo, useHistory, useSelf , useMutation, useStorage} from "@/liveblocks.config"
+import { useCanRedo, useCanUndo, useHistory, useSelf , useMutation, useStorage, useOthersMapped} from "@/liveblocks.config"
 import { Camera, CanvasMode, CanvasState, Color, LayerType, Point } from "@/types/canvas"
 import { CursorPresence } from "./cursor-presence"
-import { pointerEventToCanvasPoint } from "@/lib/utils"
+import { ConnectionIdToColor, pointerEventToCanvasPoint } from "@/lib/utils"
 
 import {nanoid} from 'nanoid'
 import { LiveObject } from "@liveblocks/client"
@@ -28,9 +28,7 @@ type CanvasProps = {
 
 const Canvas = ({boardId}:CanvasProps) => {
  
-   const layerIds = useStorage((root)=>root.layerIds)
-
-
+  const layerIds = useStorage((root)=>root.layerIds)
   const [canvasState , setCanvasState]= useState<CanvasState>({mode:CanvasMode.None})
   const [camera , setCamera] = useState<Camera>({x:0 , y:0})
   const [lastUsedColor , setLastUsedColor] = useState<Color>({ r:0, g:0, b:0})
@@ -39,8 +37,6 @@ const Canvas = ({boardId}:CanvasProps) => {
   const canUndo = useCanUndo();//boolean value whether it is active or not
   const canRedo = useCanRedo();//boolean value whether it is active or not
 
-
-  
 
 //onWheel method handler
  const onWheel = useCallback((e:React.WheelEvent)=>{
@@ -90,23 +86,39 @@ const Canvas = ({boardId}:CanvasProps) => {
 
 
  const onPointerUp = useMutation(({}, e )=>{
-
+ 
   const point = pointerEventToCanvasPoint(e , camera);
   if(canvasState.mode === CanvasMode.Inserting)
       insertLayer(canvasState.layertype, point)
     
   else
       setCanvasState({mode:CanvasMode.None})
-    
+
     
   history.resume()
 
- },[camera , canvasState , history , insertLayer])
+ },[camera , canvasState , history ])
 
 
+ const selections = useOthersMapped((other)=>other.presence.selection)
 
 
+ const layerIdsToColorSelections = useMemo(()=>{
 
+  const layerIdsToColorSelections : Record<string,string>={}  
+
+   for(const user of selections)
+    {
+      const [connectionId , selection] = user;
+
+       for(const layerId of selection)
+        {
+          layerIdsToColorSelections[layerId] = ConnectionIdToColor(connectionId);
+        }
+    }
+  return layerIdsToColorSelections;
+
+ },[selections])
 
   return (
     <main className="h-full w-full  bg-slate-200 relative touch-none">
@@ -139,7 +151,7 @@ const Canvas = ({boardId}:CanvasProps) => {
                     key ={layerId}
                     id={layerId}
                     onLayerPointerDown = {()=>{}}
-                    selectionColor = "#000"
+                    selectionColor = {layerIdsToColorSelections[layerId]}
                    />
                 ))
               }
