@@ -1,3 +1,4 @@
+import { ColorToCss } from "@/lib/utils"
 import { RectangleLayer } from "@/types/canvas"
 import React from "react"
 
@@ -28,8 +29,8 @@ const Retangle = ({id ,layer, onPointerDown , selectionColor }:RetangleProps) =>
     width={width}
     height={height}
     strokeWidth={1}
-    fill="#000"
-    stroke="transparent"
+    fill={fill ? ColorToCss(fill) : '000'}
+    stroke={ selectionColor ||  "transparent"}
     />
   )
 }
